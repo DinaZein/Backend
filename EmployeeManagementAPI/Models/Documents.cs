@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EmployeeManagementAPI.Models
 {
-  public class Timesheet
+  public class Document
   {
     [Key]
     public int Id { get; set; }
@@ -12,12 +12,14 @@ namespace EmployeeManagementAPI.Models
     [ForeignKey("Employee")]
     public int EmployeeId { get; set; }
 
-    public DateTime StartTime { get; set; }
-    public DateTime EndTime { get; set; }
+    [Required]
+    public string FilePath { get; set; }
 
-    [MaxLength(255)]
-    public string? Summary { get; set; }
+    [Required]
+    public string FileType { get; set; }
 
-    public Employee? Employee { get; set; }
+    public DateTime UploadedAt { get; set; } = DateTime.UtcNow;
+
+    public Employee Employee { get; set; }
   }
 }

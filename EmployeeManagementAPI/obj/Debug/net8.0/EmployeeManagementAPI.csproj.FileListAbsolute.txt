@@ -168,3 +168,4 @@ C:\Users\Lenovo\Desktop\Backend-mgmt\Backend\EmployeeManagementAPI\obj\Debug\net
 C:\Users\Lenovo\Desktop\Backend-mgmt\Backend\EmployeeManagementAPI\obj\Debug\net8.0\EmployeeManagementAPI.pdb
 C:\Users\Lenovo\Desktop\Backend-mgmt\Backend\EmployeeManagementAPI\obj\Debug\net8.0\EmployeeManagementAPI.genruntimeconfig.cache
 C:\Users\Lenovo\Desktop\Backend-mgmt\Backend\EmployeeManagementAPI\obj\Debug\net8.0\ref\EmployeeManagementAPI.dll
+C:\Users\Lenovo\Desktop\Backend-mgmt\Backend\EmployeeManagementAPI\bin\Debug\net8.0\EmployeeManagementAPI.staticwebassets.runtime.json

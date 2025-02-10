@@ -20,14 +20,12 @@ namespace EmployeeManagementAPI.Controllers
       _context = context;
     }
 
-    // ✅ 1. Get all timesheets
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Timesheet>>> GetTimesheets()
     {
       return await _context.Timesheets.Include(t => t.Employee).ToListAsync();
     }
 
-    // ✅ 2. Get a specific timesheet by ID
     [HttpGet("{id}")]
     public async Task<ActionResult<Timesheet>> GetTimesheet(int id)
     {
@@ -39,7 +37,6 @@ namespace EmployeeManagementAPI.Controllers
       return timesheet;
     }
 
-    // ✅ 3. Create a new timesheet
     [HttpPost]
     public async Task<ActionResult<Timesheet>> CreateTimesheet(Timesheet timesheet)
     {
@@ -56,7 +53,6 @@ namespace EmployeeManagementAPI.Controllers
       }
     }
 
-    // ✅ 4. Update an existing timesheet
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateTimesheet(int id, Timesheet timesheet)
     {
@@ -77,7 +73,6 @@ namespace EmployeeManagementAPI.Controllers
       }
     }
 
-    // ✅ 5. Delete a timesheet
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteTimesheet(int id)
     {
