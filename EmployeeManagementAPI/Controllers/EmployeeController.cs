@@ -18,8 +18,6 @@ namespace EmployeeManagementAPI.Controllers
 
     // GET: api/employee
     [HttpGet]
-    [HttpGet]
-    [HttpGet]
     public async Task<IActionResult> GetEmployees([FromQuery] string? search, int page = 1, int pageSize = 5)
     {
       var query = _context.Employees
@@ -260,7 +258,7 @@ namespace EmployeeManagementAPI.Controllers
     {
       var photo = await _context.Documents
           .Where(d => d.EmployeeId == id && d.FileType == "Profile Picture")
-          .OrderByDescending(d => d.UploadedAt) // Get the latest picture
+          .OrderByDescending(d => d.UploadedAt)
           .FirstOrDefaultAsync();
 
       if (photo == null)
@@ -270,77 +268,5 @@ namespace EmployeeManagementAPI.Controllers
 
       return Ok(new { PhotoPath = photo.FilePath });
     }
-    [HttpPost("{id}/upload-document")]
-    public async Task<IActionResult> UploadDocument(int id, IFormFile file, string fileType)
-    {
-      var employee = await _context.Employees.FindAsync(id);
-      if (employee == null)
-      {
-        return NotFound("Employee not found.");
-      }
-
-      if (file == null || file.Length == 0)
-      {
-        return BadRequest("No file uploaded.");
-      }
-
-      var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/documents");
-      if (!Directory.Exists(uploadsFolder))
-      {
-        Directory.CreateDirectory(uploadsFolder);
-      }
-
-      var filePath = Path.Combine(uploadsFolder, $"{id}_{file.FileName}");
-      using (var stream = new FileStream(filePath, FileMode.Create))
-      {
-        await file.CopyToAsync(stream);
-      }
-
-      var document = new Document
-      {
-        EmployeeId = id,
-        FilePath = $"/uploads/documents/{id}_{file.FileName}",
-        FileType = fileType
-      };
-
-      _context.Documents.Add(document);
-      await _context.SaveChangesAsync();
-
-      return Ok(new { Message = "Document uploaded successfully.", DocumentPath = document.FilePath });
-    }
-    [HttpDelete("delete-document/{documentId}")]
-
-    [HttpGet("{id}/documents")]
-    public async Task<IActionResult> GetEmployeeDocuments(int id)
-    {
-      var documents = await _context.Documents
-          .Where(d => d.EmployeeId == id)
-          .Select(d => new { d.Id, d.FilePath, d.FileType, d.UploadedAt })
-          .ToListAsync();
-
-      return Ok(documents);
-    }
-
-    public async Task<IActionResult> DeleteDocument(int documentId)
-    {
-      var document = await _context.Documents.FindAsync(documentId);
-      if (document == null)
-      {
-        return NotFound("Document not found.");
-      }
-
-      var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", document.FilePath.TrimStart('/'));
-
-      if (System.IO.File.Exists(filePath))
-      {
-        System.IO.File.Delete(filePath);
-      }
-
-      _context.Documents.Remove(document);
-      await _context.SaveChangesAsync();
-
-      return Ok(new { Message = "Document deleted successfully." });
-    }
-
   }
 }

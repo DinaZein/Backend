@@ -42,7 +42,6 @@ namespace EmployeeManagementAPI.Models
     public DateTime StartDate { get; set; }
     public DateTime? EndDate { get; set; }
 
-    // Get profile picture from Documents table
     public string? ProfilePicture { get; set; }
   }
 
